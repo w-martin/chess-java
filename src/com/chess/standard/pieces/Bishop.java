@@ -10,7 +10,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Represents a Bishop standard Piece.
+ *
  * @author William Martin
+ * @since v0.0
  */
 public class Bishop extends AbstractPiece {
 
