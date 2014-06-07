@@ -18,7 +18,7 @@ public abstract class AbstractBoard implements Board {
      * @param width board width in squares.
      * @param height board height in squares.
      */
-    public AbstractBoard(final int width, final int height) {
+    protected AbstractBoard(final int width, final int height) {
         this.width = width;
         this.height = height;
     }
