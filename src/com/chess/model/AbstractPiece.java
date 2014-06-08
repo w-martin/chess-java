@@ -9,6 +9,7 @@ package com.chess.model;
 public abstract class AbstractPiece implements Piece {
 
     private final int side;
+    private boolean hasMoved;
 
     /**
      * Default constructor.
@@ -17,6 +18,12 @@ public abstract class AbstractPiece implements Piece {
      */
     public AbstractPiece(final int side) {
         this.side = side;
+        this.hasMoved = false;
+    }
+
+    @Override
+    public boolean checkHasMoved() {
+        return hasMoved;
     }
 
     /**
@@ -24,7 +31,7 @@ public abstract class AbstractPiece implements Piece {
      *
      * @return the side of this {@link Piece}.
      */
-    public int getSide() {
+    public int getTeam() {
         return side;
     }
 }

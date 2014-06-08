@@ -1,5 +1,6 @@
 package com.chess.model;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,9 +22,23 @@ public interface Piece {
                                               final Board board);
 
     /**
-     * Gets the side of this Piece.
+     * Gets the team of this Piece.
      *
-     * @return the side of this Piece.
+     * @return the team of this Piece.
      */
-    public int getSide();
+    public int getTeam();
+
+    /**
+     * Gets the list of opposing teams for this Piece.
+     *
+     * @return the list of opposing teams for this Piece.
+     */
+    public List<Integer> getOpposingTeams();
+
+    /**
+     * Checks if this Piece has moved.
+     *
+     * @return true if this Piece has moved, false otherwise.
+     */
+    public boolean checkHasMoved();
 }

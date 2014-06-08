@@ -85,7 +85,7 @@ public class Queen extends AbstractPiece {
             if (null == p) {
                 shouldContinue = true;
                 positions.add(position);
-            } else if (p.getSide() != this.getSide()) {
+            } else if (p.getTeam() != this.getTeam()) {
                 positions.add(position);
             }
         } catch (final IndexOutOfBoundsException e) {
