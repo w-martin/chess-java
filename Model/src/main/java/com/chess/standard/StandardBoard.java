@@ -53,4 +53,27 @@ public class StandardBoard extends AbstractBoard {
                                    final Piece piece) {
         pieceMap.put(position.hashCode(), piece);
     }
+
+    @Override
+    public boolean checkPositionInBounds(final Position position) {
+        return (0 < position.getX() &&
+                this.getWidth() >= position.getX() &&
+                0 < position.getY() &&
+                this.getHeight() >= position.getY());
+    }
+
+    @Override
+    public boolean checkSquareCoveredByTeam(final Position position, final int team) {
+        return false;
+    }
+
+    @Override
+    public boolean checkSquareOccupiedByTeam(final Position position, final int team) {
+        return false;
+    }
+
+    @Override
+    public boolean checkSquareOccupied(final Position position) {
+        return false;
+    }
 }

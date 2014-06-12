@@ -13,5 +13,6 @@
     <groupId>com.chess</groupId>
     <artifactId>Model</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>${project.groupId}.${project.artifactId}</name>
     
 </project>

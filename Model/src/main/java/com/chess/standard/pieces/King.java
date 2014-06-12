@@ -107,5 +107,6 @@ public class King extends AbstractPiece {
                 this.getOpposingTeams().get(0))) {
             positions.add(position);
         }
+        return shouldContinue;
     }
 }

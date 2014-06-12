@@ -7,6 +7,7 @@ import com.chess.model.Position;
 import com.chess.standard.StandardPosition;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -49,6 +50,11 @@ public class Bishop extends AbstractPiece {
             }
         }
         return positions;
+    }
+
+    @Override
+    public List<Integer> getOpposingTeams() {
+        return null;
     }
 
     /**

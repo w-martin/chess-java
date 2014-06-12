@@ -13,6 +13,7 @@
     <groupId>com.chess</groupId>
     <artifactId>Network</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>${project.groupId}.${project.artifactId}</name>
 
     <dependencies>
         <dependency>
