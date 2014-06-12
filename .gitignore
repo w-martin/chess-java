@@ -1,2 +1,6 @@
 .idea/
 chess-java.iml
+target/
+*.iml
+META-INF/
+out/

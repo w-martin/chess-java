@@ -1,7 +1,7 @@
 package com.chess.standard.pieces;
 
 /**
- * Represents a Rook standard Piece.
+ * Represents a Queen standard Piece.
  *
  * @author William Martin
  * @since v0.0
@@ -14,16 +14,17 @@ import com.chess.model.Position;
 import com.chess.standard.StandardPosition;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-public class Rook extends AbstractPiece {
+public class Queen extends AbstractPiece {
 
     /**
      * Default constructor.
      *
-     * @param side the team of this Rook.
+     * @param side the team of this Queen.
      */
-    public Rook(final int side) {
+    public Queen(final int side) {
         super(side);
     }
 
@@ -51,7 +52,23 @@ public class Rook extends AbstractPiece {
                 p = new StandardPosition(x, y);
             } while (addValidMoveToSet(p, board, positions));
         }
+        for (int i = -1; i <= 1; i+=2) {
+            for (int j = -1; j <= 1; j+=2) {
+                x = position.getX();
+                y = position.getY();
+                do {
+                    x += i;
+                    y += j;
+                    p = new StandardPosition(x, y);
+                } while (addValidMoveToSet(p, board, positions));
+            }
+        }
         return positions;
+    }
+
+    @Override
+    public List<Integer> getOpposingTeams() {
+        return null;
     }
 
     /**
@@ -74,7 +91,7 @@ public class Rook extends AbstractPiece {
             if (null == p) {
                 shouldContinue = true;
                 positions.add(position);
-            } else if (p.getSide() != this.getSide()) {
+            } else if (p.getTeam() != this.getTeam()) {
                 positions.add(position);
             }
         } catch (final IndexOutOfBoundsException e) {

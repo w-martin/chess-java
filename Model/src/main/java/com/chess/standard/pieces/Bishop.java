@@ -7,6 +7,7 @@ import com.chess.model.Position;
 import com.chess.standard.StandardPosition;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -51,6 +52,11 @@ public class Bishop extends AbstractPiece {
         return positions;
     }
 
+    @Override
+    public List<Integer> getOpposingTeams() {
+        return null;
+    }
+
     /**
      * Checks if the given {@link Position} is valid and adds it to the set
      * if it is.
@@ -71,7 +77,7 @@ public class Bishop extends AbstractPiece {
             if (null == p) {
                 shouldContinue = true;
                 positions.add(position);
-            } else if (p.getSide() != this.getSide()) {
+            } else if (p.getTeam() != this.getTeam()) {
                 positions.add(position);
             }
         } catch (final IndexOutOfBoundsException e) {
