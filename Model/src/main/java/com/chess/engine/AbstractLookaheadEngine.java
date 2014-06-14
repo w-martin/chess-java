@@ -1,5 +1,7 @@
 package com.chess.engine;
 
+import com.chess.game.MoveController;
+
 /**
  * Abstract {@link Engine} that uses a fixed lookahead range to plan the best
  * {@link com.chess.model.Move}.
@@ -7,16 +9,14 @@ package com.chess.engine;
  * @author William Martin
  * @since v0.0
  */
-public abstract class AbstractLookaheadEngine implements Engine {
+public abstract class AbstractLookaheadEngine <T, Y> extends
+        AbstractEngine <T, Y> {
 
     private final int lookahead;
 
-    /**
-     * Default constructor.
-     *
-     * @param lookahead the fixed lookahead range for planning moves.
-     */
-    public AbstractLookaheadEngine(final int lookahead) {
+    public AbstractLookaheadEngine(MoveController<T, Y> moveController,
+                                   final int lookahead) {
+        super(moveController);
         this.lookahead = lookahead;
     }
 

@@ -16,9 +16,9 @@ import java.util.List;
  * @author William Martin
  * @since v0.0
  */
-public class RandomEngine <T> extends AbstractEngine <T> {
+public class RandomEngine <T, Y> extends AbstractEngine <T, Y> {
 
-    public RandomEngine(final MoveController <T> moveController) {
+    public RandomEngine(final MoveController <T, Y> moveController) {
         super(moveController);
     }
 

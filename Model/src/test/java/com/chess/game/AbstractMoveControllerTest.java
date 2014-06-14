@@ -2,9 +2,9 @@ package com.chess.game;
 
 import com.chess.model.Board;
 import com.chess.model.Move;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class AbstractMoveControllerTest {
     private Board testBoard;
     private AbstractMoveController moveController;
 
-    @Before
+    @BeforeMethod
     public void setUp() throws Exception {
         testBoard = mock(Board.class);
         moveController = new MoveControllerImpl(testBoard);

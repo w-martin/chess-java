@@ -3,9 +3,10 @@ package com.chess.engine;
 import com.chess.game.MoveController;
 import com.chess.model.Board;
 import com.chess.model.Move;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 
 import static org.mockito.Mockito.mock;
 
@@ -20,7 +21,7 @@ public class AbstractEngineTest {
     private AbstractEngine engine;
     private MoveController moveController;
 
-    @Before
+    @BeforeMethod
     public void setUp() throws Exception {
         moveController = mock(MoveController.class);
         engine = new EngineImpl(moveController);

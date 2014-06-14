@@ -1,6 +1,7 @@
 package com.chess.engine;
 
 import com.chess.game.MoveController;
+import com.chess.game.Player;
 import com.google.common.annotations.VisibleForTesting;
 
 /**
@@ -12,7 +13,7 @@ import com.google.common.annotations.VisibleForTesting;
  * @author William Martin
  * @since v0.0
  */
-public abstract class AbstractEngine <T, Y> implements Engine <T> {
+public abstract class AbstractEngine <T, Y> implements Engine, Player<T> {
 
     private final MoveController<T, Y> moveController;
 
