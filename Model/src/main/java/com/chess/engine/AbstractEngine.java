@@ -12,11 +12,11 @@ import com.google.common.annotations.VisibleForTesting;
  * @author William Martin
  * @since v0.0
  */
-public abstract class AbstractEngine <T> implements Engine <T> {
+public abstract class AbstractEngine <T, Y> implements Engine <T> {
 
-    private final MoveController<T> moveController;
+    private final MoveController<T, Y> moveController;
 
-    public AbstractEngine (final MoveController<T> moveController) {
+    public AbstractEngine (final MoveController<T, Y> moveController) {
         this.moveController = moveController;
     }
 
@@ -28,7 +28,7 @@ public abstract class AbstractEngine <T> implements Engine <T> {
      * {@link com.chess.engine.Engine} uses.
      */
     @VisibleForTesting
-    public MoveController<T> getMoveController() {
+    public MoveController<T, Y> getMoveController() {
         return moveController;
     }
 }

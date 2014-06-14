@@ -13,7 +13,7 @@ import java.util.List;
  * @author William Martin
  * @since v0.0
  */
-public interface MoveController <T> {
+public interface MoveController <T, Y> {
 
     /**
      * Computes the possible moves for the given team.
@@ -22,7 +22,7 @@ public interface MoveController <T> {
      * @param side the team to compute moves for.
      * @return the possible moves for the given team.
      */
-    public List<Move> computeMoves(Board board, T side);
+    public List<Move> computeMoves(Board<T, Y> board, T side);
 
     /**
      * Gets the list of completed moves.

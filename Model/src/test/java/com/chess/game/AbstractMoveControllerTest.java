@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collection;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
@@ -41,13 +40,13 @@ public class AbstractMoveControllerTest {
     /**
      * Provides access to {@link com.chess.game.AbstractMoveController}.
      */
-    private class MoveControllerImpl extends AbstractMoveController {
+    private class MoveControllerImpl <T, Y> extends AbstractMoveController <T, Y> {
 
         private MoveControllerImpl(final Board board) {
             super(board);
         }
         @Override
-        public Collection<Move> computeMoves(Board board, int side) {
+        public List<Move> computeMoves(Board<T, Y> board, T side) {
             return null;
         }
 

@@ -71,6 +71,7 @@
 
     <modules>
         <module>Model</module>
+        <module>Standard</module>
         <module>Network</module>
         <module>BasicEngine</module>
         <module>Client</module>

@@ -8,7 +8,7 @@ import com.chess.model.Board;
  *
  * @author William Martin
  */
-public interface Scorer {
+public interface Scorer <T> {
 
     /**
      * Scores the given {@link Board}.
@@ -17,5 +17,5 @@ public interface Scorer {
      * @param side the side to score for.
      * @return the computed score.
      */
-    public double score(final Board board, final int side);
+    public double score(final Board board, final T side);
 }

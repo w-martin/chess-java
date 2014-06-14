@@ -10,30 +10,32 @@ import java.util.*;
  * @author William Martin
  * @since v0.0
  */
-public class StandardBoard extends AbstractBoard {
+public class StandardBoard extends AbstractBoard <StandardTeam, StandardType> {
 
-    final Map<Integer, Piece> pieceMap;
-    final Set<Piece> whitePieces;
-    final Set<Piece> blackPieces;
+    final Map<Integer, Piece<StandardTeam, StandardType>> pieceMap;
+    final Set<Piece<StandardTeam, StandardType>> whitePieces;
+    final Set<Piece<StandardTeam, StandardType>> blackPieces;
 
     /**
      * Default constructor.
      */
     public StandardBoard() {
         super(8, 8);
-        pieceMap = new HashMap<Integer, Piece>(32);
-        whitePieces = new HashSet<Piece>(16);
-        blackPieces = new HashSet<Piece>(16);
+        pieceMap = new HashMap<Integer, Piece<StandardTeam, StandardType>>(32);
+        whitePieces = new HashSet<Piece<StandardTeam, StandardType>>(16);
+        blackPieces = new HashSet<Piece<StandardTeam, StandardType>>(16);
     }
 
     @Override
-    public Set<Piece> getPieces() {
-        return new HashSet<Piece>(pieceMap.values());
+    public Set<Piece<StandardTeam, StandardType>> getPieces() {
+        return new HashSet<Piece<StandardTeam, StandardType>>(
+                pieceMap.values());
     }
 
     @Override
-    public Set<Piece> getPieces(final int side) {
-        return (StandardSides.WHITE.value() == side) ? whitePieces : blackPieces;
+    public Set<Piece<StandardTeam, StandardType>> getPieces(
+            final StandardTeam side) {
+        return StandardTeam.WHITE == side ? whitePieces : blackPieces;
     }
 
     @Override
@@ -67,12 +69,12 @@ public class StandardBoard extends AbstractBoard {
     }
 
     @Override
-    public boolean checkSquareCoveredByTeam(final Position position, final int team) {
+    public boolean checkSquareCoveredByTeam(final Position position, final StandardTeam team) {
         return false;
     }
 
     @Override
-    public boolean checkSquareOccupiedByTeam(final Position position, final int team) {
+    public boolean checkSquareOccupiedByTeam(final Position position, final StandardTeam team) {
         return false;
     }
 
@@ -82,17 +84,7 @@ public class StandardBoard extends AbstractBoard {
     }
 
     @Override
-    public int getNoPieces(final int side) {
+    public int getNoPieces(final StandardTeam side) {
         return getPieces(side).size();
-    }
-
-    @Override
-    public List<Move> getPossibleMoves(final int side) {
-        final List<Move> moves = new ArrayList<Move>();
-        final Set<Piece> pieces = getPieces(side);
-        for (final Piece p : pieces) {
-            moves.addAll(((AbstractPiece) p).computePossibleMoves());
-        }
-        return moves;
     }
 }

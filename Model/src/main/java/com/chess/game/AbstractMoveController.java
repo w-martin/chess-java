@@ -15,12 +15,12 @@ import java.util.List;
  * @author William Martin
  * @since v0.0
  */
-public abstract class AbstractMoveController <T> implements MoveController <T> {
+public abstract class AbstractMoveController <T, Y> implements MoveController <T, Y> {
 
     private final List<Move> moveHistory;
-    private final Board board;
+    private final Board<T, Y> board;
 
-    public  AbstractMoveController(final Board board) {
+    public  AbstractMoveController(final Board<T, Y> board) {
         this.board = board;
         moveHistory = new ArrayList<>();
     }
@@ -30,7 +30,12 @@ public abstract class AbstractMoveController <T> implements MoveController <T> {
      *
      * @return the {@link com.chess.model.Board} this MoveController is using.
      */
-    public Board getBoard() {
+    public Board<T, Y> getBoard() {
         return board;
+    }
+
+    @Override
+    public List<Move> getMoveHistory() {
+        return moveHistory;
     }
 }

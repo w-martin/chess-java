@@ -1,9 +1,5 @@
 package com.chess.engine;
 
-import com.chess.engine.AbstractLookaheadEngine;
-import com.chess.engine.Assessment;
-import com.chess.engine.Engine;
-import com.chess.engine.Scorer;
 import com.chess.model.Board;
 import com.chess.model.Move;
 import org.apache.commons.lang3.tuple.Pair;
