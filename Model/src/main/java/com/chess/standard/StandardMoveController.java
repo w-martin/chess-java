@@ -4,7 +4,6 @@ import com.chess.game.AbstractMoveController;
 import com.chess.model.Board;
 import com.chess.model.Move;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -13,14 +12,14 @@ import java.util.List;
  * @author William Martin
  * @since v0.0
  */
-public class StandardMoveController extends AbstractMoveController {
+public class StandardMoveController <T> extends AbstractMoveController <T> {
 
     public StandardMoveController(final Board board) {
         super(board);
     }
 
     @Override
-    public Collection<Move> computeMoves(Board board, int side) {
+    public List<Move> computeMoves(final Board board, final T side) {
         return null;
     }
 

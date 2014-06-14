@@ -12,10 +12,20 @@ public enum StandardType {
 
     private int weight;
 
+    /**
+     * Default constructor.
+     *
+     * @param weight the weight of this piece.
+     */
     private StandardType(final int weight) {
         this.weight = weight;
     }
 
+    /**
+     * Gets the weight of this piece.
+     *
+     * @return the weight of this piece.
+     */
     public int getWeight() {
         return weight;
     }

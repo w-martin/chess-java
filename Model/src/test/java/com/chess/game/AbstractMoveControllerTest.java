@@ -2,13 +2,14 @@ package com.chess.game;
 
 import com.chess.model.Board;
 import com.chess.model.Move;
-import com.chess.standard.StandardBoard;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert;
 
 import java.util.Collection;
 import java.util.List;
+
+import static org.mockito.Mockito.mock;
 
 /**
  * Tests {@link com.chess.game.AbstractMoveController}.
@@ -23,7 +24,7 @@ public class AbstractMoveControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        testBoard = new StandardBoard();
+        testBoard = mock(Board.class);
         moveController = new MoveControllerImpl(testBoard);
     }
 

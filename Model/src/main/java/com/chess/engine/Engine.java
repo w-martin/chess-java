@@ -6,10 +6,12 @@ import com.chess.model.Move;
 /**
  * Interface for a chess engine.
  *
+ * @param T the team class.
+ *
  * @author William Martin
  * @since v0.0
  */
-public interface Engine {
+public interface Engine <T> {
 
     /**
      * Plans a move using the given {@link Board} and aims to complete in the
@@ -19,7 +21,7 @@ public interface Engine {
      * @param side the team to move.
      * @return the computed {@link Move}.
      */
-    public Move move(final Board board, final int side);
+    public Move move(final Board board, final T side);
 
     /**
      * Produces an assessment of the given {@link Board}.

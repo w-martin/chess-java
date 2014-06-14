@@ -1,9 +1,10 @@
 package com.chess.integration.IT;
 
+import com.chess.engine.BasicEngine;
 import com.chess.game.GameController;
 import com.chess.game.GameResult;
 import com.chess.standard.StandardGameController;
-import com.chess.standard.StandardSides;
+import com.chess.standard.StandardTeam;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,7 +20,6 @@ public class IT {
     public void testGame() throws Exception {
         final GameController controller = new StandardGameController(new BasicEngine(), new RandomEngine());
         final GameResult result = controller.playGame();
-        Assert.assertTrue(result.getWinner() == StandardSides.WHITE.value());
+        Assert.assertTrue(result.getWinner() == StandardTeam.WHITE);
     }
-
 }

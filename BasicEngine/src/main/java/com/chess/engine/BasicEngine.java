@@ -1,4 +1,5 @@
-import com.chess.engine.Scorer;
+package com.chess.engine;
+
 import com.chess.standard.StandardScorer;
 
 /**

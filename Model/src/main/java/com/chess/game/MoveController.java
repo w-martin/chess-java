@@ -3,16 +3,17 @@ package com.chess.game;
 import com.chess.model.Board;
 import com.chess.model.Move;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
  * Interface for a controller of chess moves.
  *
+ * @param T the team class.
+ *
  * @author William Martin
  * @since v0.0
  */
-public interface MoveController {
+public interface MoveController <T> {
 
     /**
      * Computes the possible moves for the given team.
@@ -21,7 +22,7 @@ public interface MoveController {
      * @param side the team to compute moves for.
      * @return the possible moves for the given team.
      */
-    public Collection<Move> computeMoves(Board board, int side);
+    public List<Move> computeMoves(Board board, T side);
 
     /**
      * Gets the list of completed moves.

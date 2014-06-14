@@ -1,3 +1,5 @@
+package com.chess.engine;
+
 import com.chess.engine.AbstractLookaheadEngine;
 import com.chess.engine.Assessment;
 import com.chess.engine.Engine;
