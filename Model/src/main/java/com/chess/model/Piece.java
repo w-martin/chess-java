@@ -1,7 +1,7 @@
 package com.chess.model;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Interface for pieces which defines how they can move.
@@ -18,8 +18,8 @@ public interface Piece {
      * @param board the Board that the Piece is on.
      * @return the possible set of new positions the Piece could move to.
      */
-    public Set<Position> computePossibleMoves(final Position position,
-                                              final Board board);
+    public Collection<Move> computePossibleMoves(final Position position,
+                                                 final Board board);
 
     /**
      * Gets the team of this Piece.

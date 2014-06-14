@@ -1,13 +1,8 @@
 package com.chess.standard;
 
-import com.chess.model.AbstractBoard;
-import com.chess.model.Piece;
-import com.chess.model.Position;
+import com.chess.model.*;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Standard 8x8 chess {@link com.chess.model.Board}.
@@ -18,6 +13,8 @@ import java.util.Set;
 public class StandardBoard extends AbstractBoard {
 
     final Map<Integer, Piece> pieceMap;
+    final Set<Piece> whitePieces;
+    final Set<Piece> blackPieces;
 
     /**
      * Default constructor.
@@ -25,6 +22,8 @@ public class StandardBoard extends AbstractBoard {
     public StandardBoard() {
         super(8, 8);
         pieceMap = new HashMap<Integer, Piece>(32);
+        whitePieces = new HashSet<Piece>(16);
+        blackPieces = new HashSet<Piece>(16);
     }
 
     @Override
@@ -33,11 +32,16 @@ public class StandardBoard extends AbstractBoard {
     }
 
     @Override
+    public Set<Piece> getPieces(final int side) {
+        return (StandardSides.WHITE.value() == side) ? whitePieces : blackPieces;
+    }
+
+    @Override
     public Piece getPieceAtPosition(final Position position)
             throws IndexOutOfBoundsException {
         // @TODO ensure comparison works by hash/x&y and not pointer
         if (1 > position.getX() || 8 < position.getX()
-            || 1 > position.getY() || 8 < position.getY()) {
+                || 1 > position.getY() || 8 < position.getY()) {
             throw new IndexOutOfBoundsException();
         }
         return pieceMap.get(position.hashCode());
@@ -75,5 +79,20 @@ public class StandardBoard extends AbstractBoard {
     @Override
     public boolean checkSquareOccupied(final Position position) {
         return false;
+    }
+
+    @Override
+    public int getNoPieces(final int side) {
+        return getPieces(side).size();
+    }
+
+    @Override
+    public List<Move> getPossibleMoves(final int side) {
+        final List<Move> moves = new ArrayList<Move>();
+        final Set<Piece> pieces = getPieces(side);
+        for (final Piece p : pieces) {
+            moves.addAll(((AbstractPiece) p).computePossibleMoves());
+        }
+        return moves;
     }
 }

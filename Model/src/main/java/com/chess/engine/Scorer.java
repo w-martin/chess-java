@@ -14,7 +14,8 @@ public interface Scorer {
      * Scores the given {@link Board}.
      *
      * @param board the Board to score.
+     * @param side the side to score for.
      * @return the computed score.
      */
-    public double score(final Board board);
+    public double score(final Board board, final int side);
 }

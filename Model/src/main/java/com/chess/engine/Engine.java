@@ -16,10 +16,10 @@ public interface Engine {
      * given time.
      *
      * @param board the Board to move to pieces on.
-     * @param time the time to move under.
+     * @param side the team to move.
      * @return the computed {@link Move}.
      */
-    public Move move(final Board board, final long time);
+    public Move move(final Board board, final int side);
 
     /**
      * Produces an assessment of the given {@link Board}.

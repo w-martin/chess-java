@@ -1,5 +1,6 @@
 package com.chess.model;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,6 +31,14 @@ public interface Board {
      * @return the pieces on this board.
      */
     public Set<Piece> getPieces();
+
+    /**
+     * Gets the pieces on this board.
+     *
+     * @param side the side to filter pieces for.
+     * @return the pieces on this board.
+     */
+    public Set<Piece> getPieces(final int side);
 
     /**
      * Gets the {@link Piece} at the given {@link Position}.
@@ -92,4 +101,20 @@ public interface Board {
      * @return true if the given square is occupied, false otherwise.
      */
     public boolean checkSquareOccupied(final Position position);
+
+    /**
+     * Gets the number of pieces of the given side.
+     *
+     * @param side the side to check for.
+     * @return the number of pieces of the given side.
+     */
+    public int getNoPieces(final int side);
+
+    /**
+     * Gets the possible moves for the given side.
+     *
+     * @param side the side to get possible moves for.
+     * @return the possible moves for the given side.
+     */
+    public List<Move> getPossibleMoves(final int side);
 }
