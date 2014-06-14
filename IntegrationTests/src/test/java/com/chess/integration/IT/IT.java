@@ -9,6 +9,9 @@ import org.junit.Test;
 
 /**
  * Integration test for basic chess engine.
+ *
+ * @author William Martin
+ * @since v0.0
  */
 public class IT {
 
