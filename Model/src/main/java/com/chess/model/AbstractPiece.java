@@ -3,22 +3,27 @@ package com.chess.model;
 /**
  * Abstract {@link Piece} with an allegiance.
  *
+ * @param <T> team enum.
+ * @param <Y> type enum.
+ *
  * @author William Martin
  * @since v0.0
  */
-public abstract class AbstractPiece implements Piece {
+public abstract class AbstractPiece <T, Y> implements Piece <T, Y> {
 
-    private final int side;
     private boolean hasMoved;
+    private final T team;
+    private final Y type;
 
     /**
      * Default constructor.
      *
-     * @param side the team of this {@link Piece}.
+     * @param team the team of this {@link Piece}.
      */
-    public AbstractPiece(final int side) {
-        this.side = side;
+    public AbstractPiece(final T team, final Y type) {
         this.hasMoved = false;
+        this.team = team;
+        this.type = type;
     }
 
     @Override
@@ -26,12 +31,13 @@ public abstract class AbstractPiece implements Piece {
         return hasMoved;
     }
 
-    /**
-     * Gets the side of this {@link Piece}.
-     *
-     * @return the side of this {@link Piece}.
-     */
-    public int getTeam() {
-        return side;
+    @Override
+    public T getTeam() {
+        return team;
+    }
+
+    @Override
+    public Y getType() {
+        return type;
     }
 }

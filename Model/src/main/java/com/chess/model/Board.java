@@ -1,5 +1,6 @@
 package com.chess.model;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Set;
  * @author William Martin
  * @since v0.0
  */
-public interface Board {
+public interface Board <T, Y> {
 
     /**
      * Gets the width of this board in squares.
@@ -29,7 +30,15 @@ public interface Board {
      *
      * @return the pieces on this board.
      */
-    public Set<Piece> getPieces();
+    public Set<Piece<T, Y>> getPieces();
+
+    /**
+     * Gets the pieces on this board.
+     *
+     * @param side the side to filter pieces for.
+     * @return the pieces on this board.
+     */
+    public Set<Piece<T, Y>> getPieces(final T side);
 
     /**
      * Gets the {@link Piece} at the given {@link Position}.
@@ -38,7 +47,7 @@ public interface Board {
      * @return the Piece at the given Position, or null if the Position is
      * empty.
      */
-    public Piece getPieceAtPosition(final Position position);
+    public Piece<T, Y> getPieceAtPosition(final Position position);
 
     /**
      * Removes the {@link Piece} at the given {@link Position}.
@@ -72,7 +81,7 @@ public interface Board {
      * otherwise.
      */
     public boolean checkSquareCoveredByTeam(final Position position,
-                                            final int team);
+                                            final T team);
 
     /**
      * Checks whether the given Position if occupied by the given team.
@@ -83,7 +92,7 @@ public interface Board {
      * otherwise.
      */
     public boolean checkSquareOccupiedByTeam(final Position position,
-                                             final int team);
+                                             final T team);
 
     /**
      * Checks whether the given square is occupied.
@@ -92,4 +101,12 @@ public interface Board {
      * @return true if the given square is occupied, false otherwise.
      */
     public boolean checkSquareOccupied(final Position position);
+
+    /**
+     * Gets the number of pieces of the given side.
+     *
+     * @param side the side to check for.
+     * @return the number of pieces of the given side.
+     */
+    public int getNoPieces(final T side);
 }

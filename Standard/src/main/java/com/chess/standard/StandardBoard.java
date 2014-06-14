@@ -1,13 +1,8 @@
 package com.chess.standard;
 
-import com.chess.model.AbstractBoard;
-import com.chess.model.Piece;
-import com.chess.model.Position;
+import com.chess.model.*;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Standard 8x8 chess {@link com.chess.model.Board}.
@@ -15,21 +10,32 @@ import java.util.Set;
  * @author William Martin
  * @since v0.0
  */
-public class StandardBoard extends AbstractBoard {
+public class StandardBoard extends AbstractBoard <StandardTeam, StandardType> {
 
-    final Map<Integer, Piece> pieceMap;
+    final Map<Integer, Piece<StandardTeam, StandardType>> pieceMap;
+    final Set<Piece<StandardTeam, StandardType>> whitePieces;
+    final Set<Piece<StandardTeam, StandardType>> blackPieces;
 
     /**
      * Default constructor.
      */
     public StandardBoard() {
         super(8, 8);
-        pieceMap = new HashMap<Integer, Piece>(32);
+        pieceMap = new HashMap<Integer, Piece<StandardTeam, StandardType>>(32);
+        whitePieces = new HashSet<Piece<StandardTeam, StandardType>>(16);
+        blackPieces = new HashSet<Piece<StandardTeam, StandardType>>(16);
     }
 
     @Override
-    public Set<Piece> getPieces() {
-        return new HashSet<Piece>(pieceMap.values());
+    public Set<Piece<StandardTeam, StandardType>> getPieces() {
+        return new HashSet<Piece<StandardTeam, StandardType>>(
+                pieceMap.values());
+    }
+
+    @Override
+    public Set<Piece<StandardTeam, StandardType>> getPieces(
+            final StandardTeam side) {
+        return StandardTeam.WHITE == side ? whitePieces : blackPieces;
     }
 
     @Override
@@ -37,7 +43,7 @@ public class StandardBoard extends AbstractBoard {
             throws IndexOutOfBoundsException {
         // @TODO ensure comparison works by hash/x&y and not pointer
         if (1 > position.getX() || 8 < position.getX()
-            || 1 > position.getY() || 8 < position.getY()) {
+                || 1 > position.getY() || 8 < position.getY()) {
             throw new IndexOutOfBoundsException();
         }
         return pieceMap.get(position.hashCode());
@@ -63,17 +69,22 @@ public class StandardBoard extends AbstractBoard {
     }
 
     @Override
-    public boolean checkSquareCoveredByTeam(final Position position, final int team) {
+    public boolean checkSquareCoveredByTeam(final Position position, final StandardTeam team) {
         return false;
     }
 
     @Override
-    public boolean checkSquareOccupiedByTeam(final Position position, final int team) {
+    public boolean checkSquareOccupiedByTeam(final Position position, final StandardTeam team) {
         return false;
     }
 
     @Override
     public boolean checkSquareOccupied(final Position position) {
         return false;
+    }
+
+    @Override
+    public int getNoPieces(final StandardTeam side) {
+        return getPieces(side).size();
     }
 }
