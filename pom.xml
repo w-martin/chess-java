@@ -68,6 +68,7 @@
         <module>Network</module>
         <module>BasicEngine</module>
         <module>Client</module>
+        <module>IntegrationTests</module>
     </modules>
 
     <build>

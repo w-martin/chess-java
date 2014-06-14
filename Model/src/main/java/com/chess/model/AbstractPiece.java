@@ -1,7 +1,6 @@
 package com.chess.model;
 
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * Abstract {@link Piece} with an allegiance.
@@ -75,4 +74,5 @@ public abstract class AbstractPiece implements Piece {
      */
     public void setPosition(final Position position) {
         this.position = position;
+    }
 }
