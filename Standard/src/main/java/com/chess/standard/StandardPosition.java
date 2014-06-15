@@ -44,6 +44,28 @@ public class StandardPosition extends Position {
         return (8 * (getY() - 1)) + getX() - 1;
     }
 
+    @Override
+    public boolean equals(final Object obj) {
+        if (StandardPosition.class == obj.getClass()) {
+            final StandardPosition other = (StandardPosition) obj;
+            return (other.getX() == getX() && other.getY() == getY());
+        } else {
+            return super.equals(obj);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s%d", numbers.get(this.getX()), this.getY());
+    }
+
+    /**
+     * Creates a {@link com.chess.standard.StandardPosition} from the given
+     * coordinate string.
+     *
+     * @param coord the coordinate string.
+     * @return the created StandardPosition.
+     */
     public static StandardPosition positionFromCoord(final String coord) {
         // A5 means x=1, y=5 etc
         int x, y;
@@ -52,8 +74,16 @@ public class StandardPosition extends Position {
         return new StandardPosition(x, y);
     }
 
-    @Override
-    public String toString() {
-        return String.format("%s%d", numbers.get(this.getX()), this.getY());
+    /**
+     * Creates a {@link com.chess.standard.StandardPosition} from the given
+     * has code.
+     *
+     * @param hashcode the hash code to generate from.
+     * @return the generated StandardPosition.
+     */
+    public static StandardPosition positionFromHash(final int hashcode) {
+        int x = hashcode % 8;
+        int y = (hashcode - x) / 8;
+        return new StandardPosition(x + 1, y + 1);
     }
 }

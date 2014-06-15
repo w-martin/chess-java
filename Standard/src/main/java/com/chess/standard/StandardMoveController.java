@@ -1,9 +1,7 @@
 package com.chess.standard;
 
 import com.chess.game.AbstractMoveController;
-import com.chess.model.Board;
-import com.chess.model.Move;
-import com.chess.model.Piece;
+import com.chess.model.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,6 +33,10 @@ public class StandardMoveController extends AbstractMoveController <StandardTeam
         List<Move> moves = new ArrayList<>();
         switch (p.getType()) {
             case PAWN:
+                moves.addAll(computePawnMoveForward(p, board));
+//                moves.addAll(computePawnMoveForwardDouble(p, board));
+//                moves.addAll(computePawnTakeDiagonal(p, board));
+//                moves.addAll(computePawnTakeEnPassant(p, board));
                 break;
             case BISHOP:
 //                Set<Position> positions = new HashSet<Position>();
@@ -195,6 +197,34 @@ public class StandardMoveController extends AbstractMoveController <StandardTeam
 //            }
 //            return shouldContinue;
                 break;
+        }
+        return moves;
+    }
+
+    private Collection<? extends Move> computePawnMoveForward(
+            final Piece<StandardTeam, StandardType> p,
+            final Board<StandardTeam, StandardType> board) {
+        List<Move> moves = new ArrayList<>();
+        Position position = board.getPosition(p);
+        Position forward = new StandardPosition(position.getX(),
+                position.getY() +
+                        ((p.getTeam() == StandardTeam.WHITE) ? 1 : -1));
+        boolean upgrade = forward.getY() ==
+                ((p.getTeam() == StandardTeam.WHITE) ? 8 : 1);
+
+        if (!board.checkSquareOccupied(forward)) {
+            if (upgrade) {
+                moves.add(new DefaultMove(p, forward,
+                        new StandardPiece(p.getTeam(), StandardType.BISHOP)));
+                moves.add(new DefaultMove(p, forward,
+                        new StandardPiece(p.getTeam(), StandardType.KNIGHT)));
+                moves.add(new DefaultMove(p, forward,
+                        new StandardPiece(p.getTeam(), StandardType.ROOK)));
+                moves.add(new DefaultMove(p, forward,
+                        new StandardPiece(p.getTeam(), StandardType.QUEEN)));
+            } else {
+                moves.add(new DefaultMove(p, forward));
+            }
         }
         return moves;
     }

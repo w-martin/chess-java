@@ -109,4 +109,13 @@ public interface Board <T, Y> {
      * @return the number of pieces of the given side.
      */
     public int getNoPieces(final T side);
+
+    /**
+     * Gets the {@link com.chess.model.Position} of the given
+     * {@link com.chess.model.Piece}.
+     *
+     * @param piece the Piece to get the Position for.
+     * @return the Position of the given Piece.
+     */
+    public Position getPosition(final Piece<T, Y> piece);
 }
