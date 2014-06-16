@@ -2,6 +2,7 @@ package com.chess.standard;
 
 import com.chess.game.AbstractMoveController;
 import com.chess.model.*;
+import com.google.common.annotations.VisibleForTesting;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -198,10 +199,42 @@ public class StandardMoveController extends AbstractMoveController <StandardTeam
 //            return shouldContinue;
                 break;
         }
+        filterForCheck(board, moves);
         return moves;
     }
 
-    private Collection<? extends Move> computePawnMoveForward(
+    /**
+     * Filters the given set of moves for those that would put the team in
+     * check.
+     * @TODO this should be replaced by a java 8 lambda expression
+     *
+     * @param board the Board to use.
+     * @param moves the moves to filter.
+     */
+    private void filterForCheck(final Board<StandardTeam, StandardType> board,
+                                List<Move> moves) {
+        for (final Move<StandardTeam, ?> m : moves) {
+            if (isInCheck(board.getUpdatedBoard(m), m.getPiece().getTeam())) {
+                moves.remove(m);
+            }
+        }
+    }
+
+    @Override
+    public boolean isInCheck(final Board<StandardTeam, StandardType> board,
+                             final StandardTeam team) {
+        return false;
+    }
+
+    /**
+     * Computes the moves that a pawn can execute going forwards.
+     *
+     * @param p the pawn.
+     * @param board the board to move on
+     * @return the moves that a pawn can execute going forwards.
+     */
+    @VisibleForTesting
+    protected List<Move> computePawnMoveForward(
             final Piece<StandardTeam, StandardType> p,
             final Board<StandardTeam, StandardType> board) {
         List<Move> moves = new ArrayList<>();

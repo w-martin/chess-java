@@ -118,4 +118,11 @@ public interface Board <T, Y> {
      * @return the Position of the given Piece.
      */
     public Position getPosition(final Piece<T, Y> piece);
+
+    /**
+     * Gets this Board after the given Move is executed.
+     *
+     * @param move the move to execute.
+     */
+    public Board<T, Y> getUpdatedBoard(final Move move);
 }

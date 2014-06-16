@@ -32,12 +32,6 @@
     </repositories>
 
     <dependencies>
-        <!--<dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>-->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -159,7 +153,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 

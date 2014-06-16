@@ -95,6 +95,11 @@ public class StandardBoard extends AbstractBoard <StandardTeam, StandardType> {
         return StandardPosition.positionFromHash(pieceMap.inverse().get(piece));
     }
 
+    @Override
+    public Board<StandardTeam, StandardType> getUpdatedBoard(Move move) {
+        return null;
+    }
+
     /**
      * Constructs a new standard chess board.
      *

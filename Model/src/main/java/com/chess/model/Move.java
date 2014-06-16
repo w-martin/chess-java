@@ -6,14 +6,14 @@ package com.chess.model;
  * @author William Martin
  * @since v0.0
  */
-public interface Move {
+public interface Move <T, Y> {
 
     /**
      * Gets the {@link Piece} that is moving.
      *
      * @return the {@link Piece} that is moving.
      */
-    public Piece getPiece();
+    public Piece<T, Y> getPiece();
 
     /**
      * Gets the {@link Position} that the Piece is moving to.
@@ -34,5 +34,5 @@ public interface Move {
      *
      * @return the Piece to upgrade to, if an upgrade is taking place, NULL otherwise.
      */
-    public Piece getUpgradedPiece();
+    public Piece<T, Y> getUpgradedPiece();
 }

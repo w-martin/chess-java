@@ -56,6 +56,11 @@ public class AbstractMoveControllerTest {
         }
 
         @Override
+        public boolean isInCheck(Board<T, Y> board, T team) {
+            return false;
+        }
+
+        @Override
         public void makeMove(Move move) {
 
         }
