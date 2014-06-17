@@ -66,7 +66,7 @@ public class StandardPosition extends Position {
      * @param coord the coordinate string.
      * @return the created StandardPosition.
      */
-    public static StandardPosition positionFromCoord(final String coord) {
+    public static StandardPosition fromCoord(final String coord) {
         // A5 means x=1, y=5 etc
         int x, y;
         x = letters.get(coord.charAt(0));

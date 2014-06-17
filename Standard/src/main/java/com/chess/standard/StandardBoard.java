@@ -82,7 +82,7 @@ public class StandardBoard extends AbstractBoard <StandardTeam, StandardType> {
 
     @Override
     public boolean checkSquareOccupied(final Position position) {
-        return false;
+        return (null != getPieceAtPosition(position));
     }
 
     @Override
@@ -107,70 +107,70 @@ public class StandardBoard extends AbstractBoard <StandardTeam, StandardType> {
      */
     public static StandardBoard NewStandardBoard() {
         StandardBoard board = new StandardBoard();
-        board.addPieceToPosition(StandardPosition.positionFromCoord("A1"),
+        board.addPieceToPosition(StandardPosition.fromCoord("A1"),
                 new StandardPiece(StandardTeam.WHITE, StandardType.ROOK));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("B1"),
+        board.addPieceToPosition(StandardPosition.fromCoord("B1"),
                 new StandardPiece(StandardTeam.WHITE, StandardType.KNIGHT));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("C1"),
+        board.addPieceToPosition(StandardPosition.fromCoord("C1"),
                 new StandardPiece(StandardTeam.WHITE, StandardType.BISHOP));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("D1"),
+        board.addPieceToPosition(StandardPosition.fromCoord("D1"),
                 new StandardPiece(StandardTeam.WHITE, StandardType.QUEEN));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("E1"),
+        board.addPieceToPosition(StandardPosition.fromCoord("E1"),
                 new StandardPiece(StandardTeam.WHITE, StandardType.KING));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("F1"),
+        board.addPieceToPosition(StandardPosition.fromCoord("F1"),
                 new StandardPiece(StandardTeam.WHITE, StandardType.BISHOP));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("G1"),
+        board.addPieceToPosition(StandardPosition.fromCoord("G1"),
                 new StandardPiece(StandardTeam.WHITE, StandardType.KNIGHT));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("H1"),
+        board.addPieceToPosition(StandardPosition.fromCoord("H1"),
                 new StandardPiece(StandardTeam.WHITE, StandardType.ROOK));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("A2"),
+        board.addPieceToPosition(StandardPosition.fromCoord("A2"),
                 new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("B2"),
+        board.addPieceToPosition(StandardPosition.fromCoord("B2"),
                 new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("C2"),
+        board.addPieceToPosition(StandardPosition.fromCoord("C2"),
                 new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("D2"),
+        board.addPieceToPosition(StandardPosition.fromCoord("D2"),
                 new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("E2"),
+        board.addPieceToPosition(StandardPosition.fromCoord("E2"),
                 new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("F2"),
+        board.addPieceToPosition(StandardPosition.fromCoord("F2"),
                 new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("G2"),
+        board.addPieceToPosition(StandardPosition.fromCoord("G2"),
                 new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("H2"),
+        board.addPieceToPosition(StandardPosition.fromCoord("H2"),
                 new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
 
-        board.addPieceToPosition(StandardPosition.positionFromCoord("A8"),
+        board.addPieceToPosition(StandardPosition.fromCoord("A8"),
                 new StandardPiece(StandardTeam.BLACK, StandardType.ROOK));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("B8"),
+        board.addPieceToPosition(StandardPosition.fromCoord("B8"),
                 new StandardPiece(StandardTeam.BLACK, StandardType.KNIGHT));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("C8"),
+        board.addPieceToPosition(StandardPosition.fromCoord("C8"),
                 new StandardPiece(StandardTeam.BLACK, StandardType.BISHOP));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("D8"),
+        board.addPieceToPosition(StandardPosition.fromCoord("D8"),
                 new StandardPiece(StandardTeam.BLACK, StandardType.QUEEN));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("E8"),
+        board.addPieceToPosition(StandardPosition.fromCoord("E8"),
                 new StandardPiece(StandardTeam.BLACK, StandardType.KING));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("F8"),
+        board.addPieceToPosition(StandardPosition.fromCoord("F8"),
                 new StandardPiece(StandardTeam.BLACK, StandardType.BISHOP));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("G8"),
+        board.addPieceToPosition(StandardPosition.fromCoord("G8"),
                 new StandardPiece(StandardTeam.BLACK, StandardType.KNIGHT));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("H8"),
+        board.addPieceToPosition(StandardPosition.fromCoord("H8"),
                 new StandardPiece(StandardTeam.BLACK, StandardType.ROOK));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("A7"),
+        board.addPieceToPosition(StandardPosition.fromCoord("A7"),
                 new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("B7"),
+        board.addPieceToPosition(StandardPosition.fromCoord("B7"),
                 new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("C7"),
+        board.addPieceToPosition(StandardPosition.fromCoord("C7"),
                 new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("D7"),
+        board.addPieceToPosition(StandardPosition.fromCoord("D7"),
                 new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("E7"),
+        board.addPieceToPosition(StandardPosition.fromCoord("E7"),
                 new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("F7"),
+        board.addPieceToPosition(StandardPosition.fromCoord("F7"),
                 new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("G7"),
+        board.addPieceToPosition(StandardPosition.fromCoord("G7"),
                 new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.positionFromCoord("H7"),
+        board.addPieceToPosition(StandardPosition.fromCoord("H7"),
                 new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
 
         return board;

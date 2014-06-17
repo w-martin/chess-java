@@ -47,8 +47,8 @@ public class StandardPositionTest {
 
     @Test
     public void testPositionFromCoord() throws Exception {
-        Assert.assertEquals(position, StandardPosition.positionFromCoord("A1"));
-        Assert.assertNotEquals(position, StandardPosition.positionFromCoord("A2"));
-        Assert.assertNotEquals(position, StandardPosition.positionFromCoord("B1"));
+        Assert.assertEquals(position, StandardPosition.fromCoord("A1"));
+        Assert.assertNotEquals(position, StandardPosition.fromCoord("A2"));
+        Assert.assertNotEquals(position, StandardPosition.fromCoord("B1"));
     }
 }

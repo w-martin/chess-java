@@ -229,34 +229,34 @@ public class StandardMoveController extends AbstractMoveController <StandardTeam
     /**
      * Computes the moves that a pawn can execute going forwards.
      *
-     * @param p the pawn.
+     * @param pawn the pawn.
      * @param board the board to move on
      * @return the moves that a pawn can execute going forwards.
      */
     @VisibleForTesting
     protected List<Move> computePawnMoveForward(
-            final Piece<StandardTeam, StandardType> p,
+            final Piece<StandardTeam, StandardType> pawn,
             final Board<StandardTeam, StandardType> board) {
         List<Move> moves = new ArrayList<>();
-        Position position = board.getPosition(p);
+        Position position = board.getPosition(pawn);
         Position forward = new StandardPosition(position.getX(),
                 position.getY() +
-                        ((p.getTeam() == StandardTeam.WHITE) ? 1 : -1));
+                        ((pawn.getTeam() == StandardTeam.WHITE) ? 1 : -1));
         boolean upgrade = forward.getY() ==
-                ((p.getTeam() == StandardTeam.WHITE) ? 8 : 1);
+                ((pawn.getTeam() == StandardTeam.WHITE) ? 8 : 1);
 
         if (!board.checkSquareOccupied(forward)) {
             if (upgrade) {
-                moves.add(new DefaultMove(p, forward,
-                        new StandardPiece(p.getTeam(), StandardType.BISHOP)));
-                moves.add(new DefaultMove(p, forward,
-                        new StandardPiece(p.getTeam(), StandardType.KNIGHT)));
-                moves.add(new DefaultMove(p, forward,
-                        new StandardPiece(p.getTeam(), StandardType.ROOK)));
-                moves.add(new DefaultMove(p, forward,
-                        new StandardPiece(p.getTeam(), StandardType.QUEEN)));
+                moves.add(new DefaultMove(pawn, forward,
+                        new StandardPiece(pawn.getTeam(), StandardType.BISHOP)));
+                moves.add(new DefaultMove(pawn, forward,
+                        new StandardPiece(pawn.getTeam(), StandardType.KNIGHT)));
+                moves.add(new DefaultMove(pawn, forward,
+                        new StandardPiece(pawn.getTeam(), StandardType.ROOK)));
+                moves.add(new DefaultMove(pawn, forward,
+                        new StandardPiece(pawn.getTeam(), StandardType.QUEEN)));
             } else {
-                moves.add(new DefaultMove(p, forward));
+                moves.add(new DefaultMove(pawn, forward));
             }
         }
         return moves;
