@@ -12,8 +12,6 @@ import java.util.List;
  * {@link com.chess.engine.Engine} that makes moves randomly and should be
  * easily beaten.
  *
- * @param T the team class.
- *
  * @author William Martin
  * @since v0.0
  */
