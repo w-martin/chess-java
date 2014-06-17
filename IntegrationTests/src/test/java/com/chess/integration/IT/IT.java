@@ -4,6 +4,7 @@ import com.chess.engine.BasicEngine;
 import com.chess.engine.RandomEngine;
 import com.chess.game.GameController;
 import com.chess.game.GameResult;
+import com.chess.game.MoveComputer;
 import com.chess.game.MoveController;
 import com.chess.standard.StandardGameController;
 import com.chess.standard.StandardTeam;
@@ -22,16 +23,19 @@ import static org.mockito.Mockito.*;
 public class IT {
 
     private MoveController moveController;
+    private MoveComputer moveComputer;
 
     @BeforeMethod
     public void setUp() throws Exception {
         moveController = mock(MoveController.class);
+        moveComputer = mock(MoveComputer.class);
     }
 
     @Test
     public void testGame() throws Exception {
         final GameController controller = new StandardGameController(
-                new BasicEngine(moveController), new RandomEngine(moveController));
+                new BasicEngine(moveController, moveComputer),
+                new RandomEngine(moveController, moveComputer));
         final GameResult result = controller.playGame();
         Assert.assertTrue(result.getWinner() == StandardTeam.WHITE);
     }
