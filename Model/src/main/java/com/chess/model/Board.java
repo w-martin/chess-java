@@ -1,6 +1,5 @@
 package com.chess.model;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -9,7 +8,7 @@ import java.util.Set;
  * @author William Martin
  * @since v0.0
  */
-public interface Board <T, Y> {
+public interface Board <T, P extends Piece<T, ?>> {
 
     /**
      * Gets the width of this board in squares.
@@ -30,7 +29,7 @@ public interface Board <T, Y> {
      *
      * @return the pieces on this board.
      */
-    public Set<Piece<T, Y>> getPieces();
+    public Set<P> getPieces();
 
     /**
      * Gets the pieces on this board.
@@ -38,7 +37,7 @@ public interface Board <T, Y> {
      * @param side the side to filter pieces for.
      * @return the pieces on this board.
      */
-    public Set<Piece<T, Y>> getPieces(final T side);
+    public Set<P> getPieces(final T side);
 
     /**
      * Gets the {@link Piece} at the given {@link Position}.
@@ -47,7 +46,7 @@ public interface Board <T, Y> {
      * @return the Piece at the given Position, or null if the Position is
      * empty.
      */
-    public Piece<T, Y> getPieceAtPosition(final Position position);
+    public P getPieceAtPosition(final Position position);
 
     /**
      * Removes the {@link Piece} at the given {@link Position}.
@@ -62,7 +61,7 @@ public interface Board <T, Y> {
      * @param position the Position to add the Piece at.
      * @param piece the Piece to add.
      */
-    public void addPieceToPosition(final Position position, final Piece piece);
+    public void addPieceToPosition(final Position position, final P piece);
 
     /**
      * Checks whether the given position is in the bounds of this Board.
@@ -117,12 +116,12 @@ public interface Board <T, Y> {
      * @param piece the Piece to get the Position for.
      * @return the Position of the given Piece.
      */
-    public Position getPosition(final Piece<T, Y> piece);
+    public Position getPosition(final P piece);
 
     /**
      * Gets this Board after the given Move is executed.
      *
      * @param move the move to execute.
      */
-    public Board<T, Y> getUpdatedBoard(final Move move);
+    public Board<T, P> getUpdatedBoard(final Move move);
 }

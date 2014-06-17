@@ -40,23 +40,14 @@ public class AbstractMoveControllerTest {
     /**
      * Provides access to {@link com.chess.game.AbstractMoveController}.
      */
-    private class MoveControllerImpl <T, Y> extends AbstractMoveController <T, Y> {
+    private class MoveControllerImpl <T, Y> extends AbstractMoveController {
 
-        private MoveControllerImpl(final Board board) {
+        public MoveControllerImpl(Board board) {
             super(board);
         }
-        @Override
-        public List<Move> computeMoves(Board<T, Y> board, T side) {
-            return null;
-        }
 
         @Override
-        public List<Move> getMoveHistory() {
-            return null;
-        }
-
-        @Override
-        public boolean isInCheck(Board<T, Y> board, T team) {
+        public boolean isInCheck(Board board, Object team) {
             return false;
         }
 

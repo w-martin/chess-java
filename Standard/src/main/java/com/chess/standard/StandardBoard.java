@@ -12,11 +12,11 @@ import java.util.*;
  * @author William Martin
  * @since v0.0
  */
-public class StandardBoard extends AbstractBoard <StandardTeam, StandardType> {
+public class StandardBoard extends AbstractBoard <StandardTeam, StandardPiece> {
 
-    final BiMap<Integer, Piece<StandardTeam, StandardType>> pieceMap;
-    final Set<Piece<StandardTeam, StandardType>> whitePieces;
-    final Set<Piece<StandardTeam, StandardType>> blackPieces;
+    final BiMap<Integer, StandardPiece> pieceMap;
+    final Set<StandardPiece> whitePieces;
+    final Set<StandardPiece> blackPieces;
 
     /**
      * Default constructor.
@@ -24,24 +24,24 @@ public class StandardBoard extends AbstractBoard <StandardTeam, StandardType> {
     public StandardBoard() {
         super(8, 8);
         pieceMap = HashBiMap.create(32);
-        whitePieces = new HashSet<Piece<StandardTeam, StandardType>>(16);
-        blackPieces = new HashSet<Piece<StandardTeam, StandardType>>(16);
+        whitePieces = new HashSet<>(16);
+        blackPieces = new HashSet<>(16);
     }
 
     @Override
-    public Set<Piece<StandardTeam, StandardType>> getPieces() {
-        return new HashSet<Piece<StandardTeam, StandardType>>(
+    public Set<StandardPiece> getPieces() {
+        return new HashSet<StandardPiece>(
                 pieceMap.values());
     }
 
     @Override
-    public Set<Piece<StandardTeam, StandardType>> getPieces(
+    public Set<StandardPiece> getPieces(
             final StandardTeam side) {
         return StandardTeam.WHITE == side ? whitePieces : blackPieces;
     }
 
     @Override
-    public Piece getPieceAtPosition(final Position position)
+    public StandardPiece getPieceAtPosition(final Position position)
             throws IndexOutOfBoundsException {
         // @TODO ensure comparison works by hash/x&y and not pointer
         if (1 > position.getX() || 8 < position.getX()
@@ -58,7 +58,7 @@ public class StandardBoard extends AbstractBoard <StandardTeam, StandardType> {
 
     @Override
     public void addPieceToPosition(final Position position,
-                                   final Piece piece) {
+                                   final StandardPiece piece) {
         pieceMap.put(position.hashCode(), piece);
     }
 
@@ -91,12 +91,13 @@ public class StandardBoard extends AbstractBoard <StandardTeam, StandardType> {
     }
 
     @Override
-    public Position getPosition(final Piece<StandardTeam, StandardType> piece) {
+    public Position getPosition(final StandardPiece piece) {
         return StandardPosition.positionFromHash(pieceMap.inverse().get(piece));
     }
 
     @Override
-    public Board<StandardTeam, StandardType> getUpdatedBoard(Move move) {
+    public Board<StandardTeam, StandardPiece> getUpdatedBoard(
+            final Move move) {
         return null;
     }
 

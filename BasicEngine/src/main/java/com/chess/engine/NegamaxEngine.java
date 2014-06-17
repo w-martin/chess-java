@@ -1,10 +1,11 @@
 package com.chess.engine;
 
+import com.chess.game.MoveComputer;
 import com.chess.game.MoveController;
 import com.chess.model.Board;
 import com.chess.model.Move;
+import com.chess.standard.StandardBoard;
 import com.chess.standard.StandardTeam;
-import com.chess.standard.StandardType;
 import org.apache.commons.lang3.tuple.Pair;
 
 /**
@@ -12,13 +13,14 @@ import org.apache.commons.lang3.tuple.Pair;
  * Ignores time.
  */
 public abstract class NegamaxEngine extends AbstractLookaheadEngine
-        <StandardTeam, StandardType> {
+        <StandardBoard, StandardTeam> {
 
     private final Scorer scorer;
 
-    public NegamaxEngine(final MoveController moveController,
+    public NegamaxEngine(final MoveController<StandardBoard, StandardTeam> moveController,
+                         final MoveComputer<StandardBoard, StandardTeam> moveComputer,
                          final int lookahead, final Scorer scorer) {
-        super(moveController, lookahead);
+        super(moveController, moveComputer, lookahead);
         this.scorer = scorer;
     }
 

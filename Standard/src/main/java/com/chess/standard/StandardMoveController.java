@@ -1,12 +1,15 @@
 package com.chess.standard;
 
 import com.chess.game.AbstractMoveController;
+import com.chess.game.MoveComputer;
 import com.chess.model.*;
+import com.chess.standard.piece.PawnMoveComputer;
 import com.google.common.annotations.VisibleForTesting;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Standard chess implementation of {@link com.chess.game.MoveController}.
@@ -14,30 +17,36 @@ import java.util.List;
  * @author William Martin
  * @since v0.0
  */
-public class StandardMoveController extends AbstractMoveController <StandardTeam, StandardType> {
+public class StandardMoveController
+        extends AbstractMoveController<StandardBoard, StandardTeam>
+        implements MoveComputer<StandardBoard, StandardTeam> {
 
-    public StandardMoveController(final Board<StandardTeam, StandardType> board) {
+    private static Map<StandardType, MoveComputer> moveControllers;
+    static {
+        moveControllers = new HashMap<>(6);
+        moveControllers.put(StandardType.PAWN, new PawnMoveComputer());
+    }
+
+    public StandardMoveController(final StandardBoard board) {
         super(board);
     }
 
     @Override
-    public List<Move> computeMoves(final Board<StandardTeam, StandardType> board, final StandardTeam side) {
-        List<Move> moves = new ArrayList<>();
-        for (final Piece<StandardTeam, StandardType> p : board.getPieces(side)) {
-            moves.addAll(computeMoves(p, board));
+    public List<Move> computeMoves(final StandardBoard board,
+                                   final StandardTeam side) {
+        final List<Move> moves = new ArrayList<>();
+        for (final StandardPiece p : board.getPieces(side)) {
+            moves.addAll(moveControllers.get(p.getType()).computeMoves(board, p));
         }
         return moves;
     }
 
-    private Collection<Move> computeMoves(final Piece<StandardTeam, StandardType> p,
-                                          final Board<StandardTeam, StandardType> board) {
+    private List<Move> computeMoves(final Piece<StandardTeam, StandardType> p,
+                                    final StandardBoard board) {
         List<Move> moves = new ArrayList<>();
         switch (p.getType()) {
             case PAWN:
-                moves.addAll(computePawnMoveForward(p, board));
-//                moves.addAll(computePawnMoveForwardDouble(p, board));
-//                moves.addAll(computePawnTakeDiagonal(p, board));
-//                moves.addAll(computePawnTakeEnPassant(p, board));
+
                 break;
             case BISHOP:
 //                Set<Position> positions = new HashSet<Position>();
@@ -211,7 +220,7 @@ public class StandardMoveController extends AbstractMoveController <StandardTeam
      * @param board the Board to use.
      * @param moves the moves to filter.
      */
-    private void filterForCheck(final Board<StandardTeam, StandardType> board,
+    private void filterForCheck(final Board<StandardTeam, ?> board,
                                 List<Move> moves) {
         for (final Move<StandardTeam, ?> m : moves) {
             if (isInCheck(board.getUpdatedBoard(m), m.getPiece().getTeam())) {
@@ -221,45 +230,9 @@ public class StandardMoveController extends AbstractMoveController <StandardTeam
     }
 
     @Override
-    public boolean isInCheck(final Board<StandardTeam, StandardType> board,
+    public boolean isInCheck(final Board<StandardTeam, ?> board,
                              final StandardTeam team) {
         return false;
-    }
-
-    /**
-     * Computes the moves that a pawn can execute going forwards.
-     *
-     * @param pawn the pawn.
-     * @param board the board to move on
-     * @return the moves that a pawn can execute going forwards.
-     */
-    @VisibleForTesting
-    protected List<Move> computePawnMoveForward(
-            final Piece<StandardTeam, StandardType> pawn,
-            final Board<StandardTeam, StandardType> board) {
-        List<Move> moves = new ArrayList<>();
-        Position position = board.getPosition(pawn);
-        Position forward = new StandardPosition(position.getX(),
-                position.getY() +
-                        ((pawn.getTeam() == StandardTeam.WHITE) ? 1 : -1));
-        boolean upgrade = forward.getY() ==
-                ((pawn.getTeam() == StandardTeam.WHITE) ? 8 : 1);
-
-        if (!board.checkSquareOccupied(forward)) {
-            if (upgrade) {
-                moves.add(new DefaultMove(pawn, forward,
-                        new StandardPiece(pawn.getTeam(), StandardType.BISHOP)));
-                moves.add(new DefaultMove(pawn, forward,
-                        new StandardPiece(pawn.getTeam(), StandardType.KNIGHT)));
-                moves.add(new DefaultMove(pawn, forward,
-                        new StandardPiece(pawn.getTeam(), StandardType.ROOK)));
-                moves.add(new DefaultMove(pawn, forward,
-                        new StandardPiece(pawn.getTeam(), StandardType.QUEEN)));
-            } else {
-                moves.add(new DefaultMove(pawn, forward));
-            }
-        }
-        return moves;
     }
 
     @Override

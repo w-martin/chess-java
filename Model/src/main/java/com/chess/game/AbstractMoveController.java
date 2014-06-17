@@ -10,17 +10,16 @@ import java.util.List;
  * Abstract {@link com.chess.game.MoveController} that keeps information on
  * Board and Move history.
  *
- * @param T the team class.
- *
  * @author William Martin
  * @since v0.0
  */
-public abstract class AbstractMoveController <T, Y> implements MoveController <T, Y> {
+public abstract class AbstractMoveController <B extends Board<T, ?>, T>
+        implements MoveController <B, T> {
 
     private final List<Move> moveHistory;
-    private final Board<T, Y> board;
+    private final B board;
 
-    public  AbstractMoveController(final Board<T, Y> board) {
+    public  AbstractMoveController(final B board) {
         this.board = board;
         moveHistory = new ArrayList<>();
     }
@@ -30,7 +29,7 @@ public abstract class AbstractMoveController <T, Y> implements MoveController <T
      *
      * @return the {@link com.chess.model.Board} this MoveController is using.
      */
-    public Board<T, Y> getBoard() {
+    public B getBoard() {
         return board;
     }
 

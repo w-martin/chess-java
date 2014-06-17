@@ -2,12 +2,13 @@ package com.chess.model;
 
 /**
  * Basic implementation of {@link Board} interface. Makes no assumptions on
- * board size, see instead {@link com.chess.standard.StandardBoard}.
+ * board size.
  *
  * @author William Martin
  * @since v0.0
  */
-public abstract class AbstractBoard <T, Y> implements Board <T, Y> {
+public abstract class AbstractBoard <T, P extends Piece<T, ?>>
+        implements Board <T, P> {
 
     private final int height;
     private final int width;

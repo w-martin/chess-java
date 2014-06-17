@@ -9,7 +9,7 @@ import com.chess.model.Move;
  * @author William Martin
  * @since v0.0
  */
-public interface Player <T> {
+public interface Player <B extends Board<T, ?>, T> {
 
     /**
      * Plans a move using the given {@link com.chess.model.Board} and aims to
@@ -19,5 +19,5 @@ public interface Player <T> {
      * @param side the team to move.
      * @return the computed {@link com.chess.model.Move}.
      */
-    public Move move(final Board board, final T side);
+    public Move move(final B board, final T side);
 }

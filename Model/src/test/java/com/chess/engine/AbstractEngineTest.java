@@ -1,5 +1,6 @@
 package com.chess.engine;
 
+import com.chess.game.MoveComputer;
 import com.chess.game.MoveController;
 import com.chess.model.Board;
 import com.chess.model.Move;
@@ -20,17 +21,17 @@ public class AbstractEngineTest {
 
     private AbstractEngine engine;
     private MoveController moveController;
+    private MoveComputer moveComputer;
 
     @BeforeMethod
     public void setUp() throws Exception {
         moveController = mock(MoveController.class);
-        engine = new EngineImpl(moveController);
+        moveComputer = mock(MoveComputer.class);
+        engine = new EngineImpl(moveController, moveComputer);
     }
 
     /**
      * Tests the MoveController getter and setter.
-     *
-     * @throws Exception
      */
     @Test
     public void testMoveController() throws Exception {
@@ -38,12 +39,21 @@ public class AbstractEngineTest {
     }
 
     /**
+     * Tests the MoveComputer getter and setter.
+     */
+    @Test
+    public void testMoveComputer() throws Exception {
+        Assert.assertEquals(moveComputer, engine.getMoveComputer());
+    }
+
+    /**
      * Provides access to {@link com.chess.engine.AbstractEngine}.
      */
     private class EngineImpl extends AbstractEngine {
 
-        public EngineImpl(MoveController moveController) {
-            super(moveController);
+        public EngineImpl(MoveController moveController,
+                          MoveComputer moveComputer) {
+            super(moveController, moveComputer);
         }
 
         @Override

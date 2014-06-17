@@ -1,5 +1,6 @@
 package com.chess.engine;
 
+import com.chess.game.MoveComputer;
 import com.chess.game.MoveController;
 import com.chess.model.Board;
 import com.chess.model.Move;
@@ -16,15 +17,17 @@ import java.util.List;
  * @author William Martin
  * @since v0.0
  */
-public class RandomEngine <T, Y> extends AbstractEngine <T, Y> {
+public class RandomEngine <B extends Board<T, ?>, T>
+        extends AbstractEngine <B, T> {
 
-    public RandomEngine(final MoveController <T, Y> moveController) {
-        super(moveController);
+    public RandomEngine(final MoveController <B, T> moveController,
+                        final MoveComputer<B, T> moveComputer) {
+        super(moveController, moveComputer);
     }
 
     @Override
-    public Move move(final Board board, final T side) {
-        List<Move> moves = getMoveController().computeMoves(board, side);
+    public Move move(final B board, final T side) {
+        List<Move> moves = getMoveComputer().computeMoves(board, side);
         int choice = new Random().nextInt(moves.size());
         return moves.get(choice);
     }
