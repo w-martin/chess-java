@@ -7,8 +7,8 @@ package com.chess.model;
  * @author William Martin
  * @since v0.0
  */
-public abstract class AbstractBoard <T, P extends Piece<T, ?>>
-        implements Board <T, P> {
+public abstract class AbstractBoard <T, Y, P extends Piece<T, Y>>
+        implements Board <T, Y, P> {
 
     private final int height;
     private final int width;

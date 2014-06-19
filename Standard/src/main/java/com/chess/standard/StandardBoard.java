@@ -1,5 +1,7 @@
 package com.chess.standard;
 
+import com.chess.exception.PieceNotFoundException;
+import com.chess.exception.PositionTakenException;
 import com.chess.model.*;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -12,7 +14,8 @@ import java.util.*;
  * @author William Martin
  * @since v0.0
  */
-public class StandardBoard extends AbstractBoard <StandardTeam, StandardPiece> {
+public class StandardBoard extends AbstractBoard<StandardTeam,
+        StandardType, StandardPiece> {
 
     final BiMap<Integer, StandardPiece> pieceMap;
     final Set<StandardPiece> whitePieces;
@@ -30,8 +33,7 @@ public class StandardBoard extends AbstractBoard <StandardTeam, StandardPiece> {
 
     @Override
     public Set<StandardPiece> getPieces() {
-        return new HashSet<StandardPiece>(
-                pieceMap.values());
+        return new HashSet<>(pieceMap.values());
     }
 
     @Override
@@ -58,8 +60,18 @@ public class StandardBoard extends AbstractBoard <StandardTeam, StandardPiece> {
 
     @Override
     public void addPieceToPosition(final Position position,
-                                   final StandardPiece piece) {
-        pieceMap.put(position.hashCode(), piece);
+                                   final StandardPiece piece)
+            throws PositionTakenException {
+
+        if (null == getPieceAtPosition(position)) {
+            pieceMap.put(position.hashCode(), piece);
+            ((StandardTeam.WHITE == piece.getTeam()) ? whitePieces : blackPieces).
+                    add(piece);
+        } else {
+            throw new PositionTakenException(
+                    String.format("Error. Position at %s is taken.",
+                            position.toString()));
+        }
     }
 
     @Override
@@ -91,12 +103,41 @@ public class StandardBoard extends AbstractBoard <StandardTeam, StandardPiece> {
     }
 
     @Override
-    public Position getPosition(final StandardPiece piece) {
-        return StandardPosition.positionFromHash(pieceMap.inverse().get(piece));
+    public int getNoPieces() {
+        return pieceMap.size();
     }
 
     @Override
-    public Board<StandardTeam, StandardPiece> getUpdatedBoard(
+    public Position getPosition(final StandardPiece piece)
+            throws PieceNotFoundException {
+        Position result = StandardPosition.positionFromHash(
+                pieceMap.inverse().get(piece));
+        if (null != result) {
+            return result;
+        } else {
+            throw new PieceNotFoundException(
+                    String.format("No Piece on board: %s",
+                            piece.toString()));
+        }
+    }
+
+    @Override
+    public Position getPosition(final StandardTeam pieceTeam,
+                                final StandardType pieceType)
+            throws PieceNotFoundException {
+        for (final StandardPiece piece : getPieces(pieceTeam)) {
+            if (pieceType == piece.getType()) {
+                return getPosition(piece);
+            }
+        }
+        throw new PieceNotFoundException(
+                String.format("No Piece on board of team %s and type %s",
+                        pieceTeam.toString(),
+                        pieceType.toString()));
+    }
+
+    @Override
+    public Board<StandardTeam, StandardType, StandardPiece> getUpdatedBoard(
             final Move move) {
         return null;
     }
@@ -106,73 +147,77 @@ public class StandardBoard extends AbstractBoard <StandardTeam, StandardPiece> {
      *
      * @return a new standard chess board.
      */
-    public static StandardBoard NewStandardBoard() {
+    public static StandardBoard createStandardBoard() {
         StandardBoard board = new StandardBoard();
-        board.addPieceToPosition(StandardPosition.fromCoord("A1"),
-                new StandardPiece(StandardTeam.WHITE, StandardType.ROOK));
-        board.addPieceToPosition(StandardPosition.fromCoord("B1"),
-                new StandardPiece(StandardTeam.WHITE, StandardType.KNIGHT));
-        board.addPieceToPosition(StandardPosition.fromCoord("C1"),
-                new StandardPiece(StandardTeam.WHITE, StandardType.BISHOP));
-        board.addPieceToPosition(StandardPosition.fromCoord("D1"),
-                new StandardPiece(StandardTeam.WHITE, StandardType.QUEEN));
-        board.addPieceToPosition(StandardPosition.fromCoord("E1"),
-                new StandardPiece(StandardTeam.WHITE, StandardType.KING));
-        board.addPieceToPosition(StandardPosition.fromCoord("F1"),
-                new StandardPiece(StandardTeam.WHITE, StandardType.BISHOP));
-        board.addPieceToPosition(StandardPosition.fromCoord("G1"),
-                new StandardPiece(StandardTeam.WHITE, StandardType.KNIGHT));
-        board.addPieceToPosition(StandardPosition.fromCoord("H1"),
-                new StandardPiece(StandardTeam.WHITE, StandardType.ROOK));
-        board.addPieceToPosition(StandardPosition.fromCoord("A2"),
-                new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.fromCoord("B2"),
-                new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.fromCoord("C2"),
-                new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.fromCoord("D2"),
-                new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.fromCoord("E2"),
-                new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.fromCoord("F2"),
-                new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.fromCoord("G2"),
-                new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.fromCoord("H2"),
-                new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
+        try {
+            board.addPieceToPosition(StandardPosition.fromCoord("A1"),
+                    new StandardPiece(StandardTeam.WHITE, StandardType.ROOK));
+            board.addPieceToPosition(StandardPosition.fromCoord("B1"),
+                    new StandardPiece(StandardTeam.WHITE, StandardType.KNIGHT));
+            board.addPieceToPosition(StandardPosition.fromCoord("C1"),
+                    new StandardPiece(StandardTeam.WHITE, StandardType.BISHOP));
+            board.addPieceToPosition(StandardPosition.fromCoord("D1"),
+                    new StandardPiece(StandardTeam.WHITE, StandardType.QUEEN));
+            board.addPieceToPosition(StandardPosition.fromCoord("E1"),
+                    new StandardPiece(StandardTeam.WHITE, StandardType.KING));
+            board.addPieceToPosition(StandardPosition.fromCoord("F1"),
+                    new StandardPiece(StandardTeam.WHITE, StandardType.BISHOP));
+            board.addPieceToPosition(StandardPosition.fromCoord("G1"),
+                    new StandardPiece(StandardTeam.WHITE, StandardType.KNIGHT));
+            board.addPieceToPosition(StandardPosition.fromCoord("H1"),
+                    new StandardPiece(StandardTeam.WHITE, StandardType.ROOK));
+            board.addPieceToPosition(StandardPosition.fromCoord("A2"),
+                    new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
+            board.addPieceToPosition(StandardPosition.fromCoord("B2"),
+                    new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
+            board.addPieceToPosition(StandardPosition.fromCoord("C2"),
+                    new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
+            board.addPieceToPosition(StandardPosition.fromCoord("D2"),
+                    new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
+            board.addPieceToPosition(StandardPosition.fromCoord("E2"),
+                    new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
+            board.addPieceToPosition(StandardPosition.fromCoord("F2"),
+                    new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
+            board.addPieceToPosition(StandardPosition.fromCoord("G2"),
+                    new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
+            board.addPieceToPosition(StandardPosition.fromCoord("H2"),
+                    new StandardPiece(StandardTeam.WHITE, StandardType.PAWN));
 
-        board.addPieceToPosition(StandardPosition.fromCoord("A8"),
-                new StandardPiece(StandardTeam.BLACK, StandardType.ROOK));
-        board.addPieceToPosition(StandardPosition.fromCoord("B8"),
-                new StandardPiece(StandardTeam.BLACK, StandardType.KNIGHT));
-        board.addPieceToPosition(StandardPosition.fromCoord("C8"),
-                new StandardPiece(StandardTeam.BLACK, StandardType.BISHOP));
-        board.addPieceToPosition(StandardPosition.fromCoord("D8"),
-                new StandardPiece(StandardTeam.BLACK, StandardType.QUEEN));
-        board.addPieceToPosition(StandardPosition.fromCoord("E8"),
-                new StandardPiece(StandardTeam.BLACK, StandardType.KING));
-        board.addPieceToPosition(StandardPosition.fromCoord("F8"),
-                new StandardPiece(StandardTeam.BLACK, StandardType.BISHOP));
-        board.addPieceToPosition(StandardPosition.fromCoord("G8"),
-                new StandardPiece(StandardTeam.BLACK, StandardType.KNIGHT));
-        board.addPieceToPosition(StandardPosition.fromCoord("H8"),
-                new StandardPiece(StandardTeam.BLACK, StandardType.ROOK));
-        board.addPieceToPosition(StandardPosition.fromCoord("A7"),
-                new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.fromCoord("B7"),
-                new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.fromCoord("C7"),
-                new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.fromCoord("D7"),
-                new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.fromCoord("E7"),
-                new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.fromCoord("F7"),
-                new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.fromCoord("G7"),
-                new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
-        board.addPieceToPosition(StandardPosition.fromCoord("H7"),
-                new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
+            board.addPieceToPosition(StandardPosition.fromCoord("A8"),
+                    new StandardPiece(StandardTeam.BLACK, StandardType.ROOK));
+            board.addPieceToPosition(StandardPosition.fromCoord("B8"),
+                    new StandardPiece(StandardTeam.BLACK, StandardType.KNIGHT));
+            board.addPieceToPosition(StandardPosition.fromCoord("C8"),
+                    new StandardPiece(StandardTeam.BLACK, StandardType.BISHOP));
+            board.addPieceToPosition(StandardPosition.fromCoord("D8"),
+                    new StandardPiece(StandardTeam.BLACK, StandardType.QUEEN));
+            board.addPieceToPosition(StandardPosition.fromCoord("E8"),
+                    new StandardPiece(StandardTeam.BLACK, StandardType.KING));
+            board.addPieceToPosition(StandardPosition.fromCoord("F8"),
+                    new StandardPiece(StandardTeam.BLACK, StandardType.BISHOP));
+            board.addPieceToPosition(StandardPosition.fromCoord("G8"),
+                    new StandardPiece(StandardTeam.BLACK, StandardType.KNIGHT));
+            board.addPieceToPosition(StandardPosition.fromCoord("H8"),
+                    new StandardPiece(StandardTeam.BLACK, StandardType.ROOK));
+            board.addPieceToPosition(StandardPosition.fromCoord("A7"),
+                    new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
+            board.addPieceToPosition(StandardPosition.fromCoord("B7"),
+                    new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
+            board.addPieceToPosition(StandardPosition.fromCoord("C7"),
+                    new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
+            board.addPieceToPosition(StandardPosition.fromCoord("D7"),
+                    new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
+            board.addPieceToPosition(StandardPosition.fromCoord("E7"),
+                    new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
+            board.addPieceToPosition(StandardPosition.fromCoord("F7"),
+                    new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
+            board.addPieceToPosition(StandardPosition.fromCoord("G7"),
+                    new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
+            board.addPieceToPosition(StandardPosition.fromCoord("H7"),
+                    new StandardPiece(StandardTeam.BLACK, StandardType.PAWN));
+        } catch (PositionTakenException e) {
+            e.printStackTrace();
+        }
 
         return board;
     }

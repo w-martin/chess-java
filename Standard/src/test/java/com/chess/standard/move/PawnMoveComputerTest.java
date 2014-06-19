@@ -1,4 +1,4 @@
-package com.chess.standard.piece;
+package com.chess.standard.move;
 
 import com.chess.model.Move;
 import com.chess.model.Position;
@@ -28,7 +28,7 @@ public class PawnMoveComputerTest {
     @BeforeMethod
     public void setUp() throws Exception {
         moveComputer = new PawnMoveComputer();
-        board = StandardBoard.NewStandardBoard();
+        board = StandardBoard.createStandardBoard();
     }
 
     /**

@@ -9,7 +9,7 @@ import com.chess.model.Move;
  * @author William Martin
  * @since v0.0
  */
-public interface Player <B extends Board<T, ?>, T> {
+public interface Player <B extends Board<T, ?, ?>, T> {
 
     /**
      * Plans a move using the given {@link com.chess.model.Board} and aims to

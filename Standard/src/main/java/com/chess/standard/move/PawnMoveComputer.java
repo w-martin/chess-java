@@ -1,15 +1,19 @@
-package com.chess.standard.piece;
+package com.chess.standard.move;
 
 import com.chess.model.DefaultMove;
 import com.chess.model.Move;
+import com.chess.exception.PieceNotFoundException;
 import com.chess.model.Position;
 import com.chess.standard.*;
+import com.chess.standard.piece.StandardPieceMoveComputer;
 import com.google.common.annotations.VisibleForTesting;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Computes moves for a pawn.
+ *
  * @author William Martin
  * @since v0.0
  */
@@ -37,7 +41,12 @@ public class PawnMoveComputer extends StandardPieceMoveComputer {
     protected List<Move> computePawnMoveForward(final StandardBoard board,
                                                 final StandardPiece pawn) {
         List<Move> moves = new ArrayList<>();
-        Position position = board.getPosition(pawn);
+        Position position = null;
+        try {
+            position = board.getPosition(pawn);
+        } catch (PieceNotFoundException e) {
+            return moves;
+        }
         Position forward = new StandardPosition(position.getX(),
                 position.getY() +
                         ((pawn.getTeam() == StandardTeam.WHITE) ? 1 : -1));

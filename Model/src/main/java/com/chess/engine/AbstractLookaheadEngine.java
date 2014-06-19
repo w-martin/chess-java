@@ -11,7 +11,7 @@ import com.chess.model.Board;
  * @author William Martin
  * @since v0.0
  */
-public abstract class AbstractLookaheadEngine <B extends Board<T, ?>, T> extends
+public abstract class AbstractLookaheadEngine <B extends Board<T, ?, ?>, T> extends
         AbstractEngine <B, T> {
 
     private final int lookahead;

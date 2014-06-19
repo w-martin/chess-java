@@ -11,7 +11,7 @@ import java.util.List;
  * @author William Martin
  * @since v0.0
  */
-public interface MoveController <B extends Board<T, ?>, T> {
+public interface MoveController <B extends Board<T, ?, ?>, T> {
 
     /**
      * Gets the list of completed moves.
@@ -28,7 +28,7 @@ public interface MoveController <B extends Board<T, ?>, T> {
      * @return true if the given team is in check on the given Board, false
      * otherwise.
      */
-    public boolean isInCheck(final Board<T, ?> board, final T team);
+    public boolean isInCheck(final B board, final T team) throws Exception;
 
     /**
      * Makes the given {@link com.chess.model.Move} and adds it to history.

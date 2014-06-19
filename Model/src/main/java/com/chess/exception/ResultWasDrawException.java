@@ -1,4 +1,4 @@
-package com.chess.game;
+package com.chess.exception;
 
 /**
  * Exception used when a win or loss was expected but the result was a draw.

@@ -1,5 +1,7 @@
 package com.chess.game;
 
+import com.chess.exception.ResultWasDrawException;
+
 /**
  * Represents the result of a chess game.
  *

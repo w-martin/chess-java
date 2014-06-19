@@ -1,15 +1,11 @@
 package com.chess.standard;
 
 import com.chess.game.AbstractMoveController;
-import com.chess.game.MoveComputer;
 import com.chess.model.*;
-import com.chess.standard.piece.PawnMoveComputer;
-import com.google.common.annotations.VisibleForTesting;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 /**
  * Standard chess implementation of {@link com.chess.game.MoveController}.
@@ -18,27 +14,10 @@ import java.util.Map;
  * @since v0.0
  */
 public class StandardMoveController
-        extends AbstractMoveController<StandardBoard, StandardTeam>
-        implements MoveComputer<StandardBoard, StandardTeam> {
-
-    private static Map<StandardType, MoveComputer> moveControllers;
-    static {
-        moveControllers = new HashMap<>(6);
-        moveControllers.put(StandardType.PAWN, new PawnMoveComputer());
-    }
+        extends AbstractMoveController<StandardBoard, StandardTeam> {
 
     public StandardMoveController(final StandardBoard board) {
         super(board);
-    }
-
-    @Override
-    public List<Move> computeMoves(final StandardBoard board,
-                                   final StandardTeam side) {
-        final List<Move> moves = new ArrayList<>();
-        for (final StandardPiece p : board.getPieces(side)) {
-            moves.addAll(moveControllers.get(p.getType()).computeMoves(board, p));
-        }
-        return moves;
     }
 
     private List<Move> computeMoves(final Piece<StandardTeam, StandardType> p,
@@ -215,23 +194,34 @@ public class StandardMoveController
     /**
      * Filters the given set of moves for those that would put the team in
      * check.
-     * @TODO this should be replaced by a java 8 lambda expression
      *
      * @param board the Board to use.
      * @param moves the moves to filter.
+     * @TODO this should be replaced by a java 8 lambda expression
      */
-    private void filterForCheck(final Board<StandardTeam, ?> board,
+    private void filterForCheck(final StandardBoard board,
                                 List<Move> moves) {
         for (final Move<StandardTeam, ?> m : moves) {
-            if (isInCheck(board.getUpdatedBoard(m), m.getPiece().getTeam())) {
+            StandardBoard updatedBoard = (StandardBoard) board.getUpdatedBoard(m);
+            try {
+                if (isInCheck(updatedBoard, m.getPiece().getTeam())) {
+                    moves.remove(m);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
                 moves.remove(m);
             }
         }
     }
 
     @Override
-    public boolean isInCheck(final Board<StandardTeam, ?> board,
-                             final StandardTeam team) {
+    public boolean isInCheck(final StandardBoard board,
+                             final StandardTeam team) throws Exception {
+        Position kingPosition = board.getPosition(team, StandardType.KING);
+        // trace diagonals to pieces and check not bishop or queen
+        // trace plus to pieces and check not rook or queen
+        // check enemy knight moves don't match position
+        // check two diagonal pawn squares for enemy pawns
         return false;
     }
 

@@ -13,7 +13,7 @@ import com.google.common.annotations.VisibleForTesting;
  * @author William Martin
  * @since v0.0
  */
-public abstract class AbstractEngine <B extends Board<T, ?>, T>
+public abstract class AbstractEngine <B extends Board<T, ?, ?>, T>
         implements Engine, Player<B, T> {
 
     private final MoveController<B, T> moveController;

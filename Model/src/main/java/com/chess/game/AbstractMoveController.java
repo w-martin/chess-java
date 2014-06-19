@@ -13,7 +13,7 @@ import java.util.List;
  * @author William Martin
  * @since v0.0
  */
-public abstract class AbstractMoveController <B extends Board<T, ?>, T>
+public abstract class AbstractMoveController <B extends Board<T, ?, ?>, T>
         implements MoveController <B, T> {
 
     private final List<Move> moveHistory;

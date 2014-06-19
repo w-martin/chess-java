@@ -1,5 +1,8 @@
 package com.chess.model;
 
+import com.chess.exception.PieceNotFoundException;
+import com.chess.exception.PositionTakenException;
+
 import java.util.Set;
 
 /**
@@ -8,7 +11,7 @@ import java.util.Set;
  * @author William Martin
  * @since v0.0
  */
-public interface Board <T, P extends Piece<T, ?>> {
+public interface Board<T, Y, P extends Piece<T, Y>> {
 
     /**
      * Gets the width of this board in squares.
@@ -59,9 +62,9 @@ public interface Board <T, P extends Piece<T, ?>> {
      * Adds the given {@link Piece} to the Board at the given {@link Position}.
      *
      * @param position the Position to add the Piece at.
-     * @param piece the Piece to add.
+     * @param piece    the Piece to add.
      */
-    public void addPieceToPosition(final Position position, final P piece);
+    public void addPieceToPosition(final Position position, final P piece) throws PositionTakenException;
 
     /**
      * Checks whether the given position is in the bounds of this Board.
@@ -75,7 +78,7 @@ public interface Board <T, P extends Piece<T, ?>> {
      * Checks whether the given Position if covered by the given team.
      *
      * @param position the Position to check.
-     * @param team the team to check for.
+     * @param team     the team to check for.
      * @return true if the given Position if covered by the given team, false
      * otherwise.
      */
@@ -86,7 +89,7 @@ public interface Board <T, P extends Piece<T, ?>> {
      * Checks whether the given Position if occupied by the given team.
      *
      * @param position the Position to check.
-     * @param team the team to check for.
+     * @param team     the team to check for.
      * @return true if the given Position if occupied by the given team, false
      * otherwise.
      */
@@ -109,19 +112,42 @@ public interface Board <T, P extends Piece<T, ?>> {
      */
     public int getNoPieces(final T side);
 
+
+    /**
+     * Gets the number of pieces.
+     *
+     * @return the number of pieces.
+     */
+    public int getNoPieces();
+
     /**
      * Gets the {@link com.chess.model.Position} of the given
      * {@link com.chess.model.Piece}.
      *
      * @param piece the Piece to get the Position for.
      * @return the Position of the given Piece.
+     * @throws com.chess.exception.PieceNotFoundException if the Piece was not
+     *                                                found.
      */
-    public Position getPosition(final P piece);
+    public Position getPosition(final P piece) throws PieceNotFoundException;
+
+    /**
+     * Gets the {@link com.chess.model.Position} of the given
+     * team and type.
+     *
+     * @param pieceTeam the team of Piece to get the Position for.
+     * @param pieceType the type of Piece to get the Position for.
+     * @return the Position of the given Piece team and type.
+     * @throws com.chess.exception.PieceNotFoundException if the Piece was not
+     *                                                found.
+     */
+    public Position getPosition(final T pieceTeam, final Y pieceType)
+            throws PieceNotFoundException;
 
     /**
      * Gets this Board after the given Move is executed.
      *
      * @param move the move to execute.
      */
-    public Board<T, P> getUpdatedBoard(final Move move);
+    public Board<T, Y, P> getUpdatedBoard(final Move move);
 }
